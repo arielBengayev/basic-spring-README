@@ -3,6 +3,12 @@ https://start.spring.io/ -> spring boot - 2.5.2
 hello world
 controller/HelloController.java
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>6.2.12</version>
+		</dependency>
+
 ```java
 @RestController
 @RequestMapping("/api/hello")
