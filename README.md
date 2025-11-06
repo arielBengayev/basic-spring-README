@@ -1,5 +1,13 @@
 https://start.spring.io/ -> spring boot - 2.5.2
 
+spring web 
+```java
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+```
+
 hello world
 controller/HelloController.java
 
