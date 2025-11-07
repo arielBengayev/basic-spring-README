@@ -24,7 +24,7 @@ public class HelloController {
 }
 ```
 commit - hello world
---------
+
 swagger
 
 		<dependency>
@@ -58,4 +58,42 @@ http://localhost:8080/swagger-ui.html#
 
 commit - with swagger
 
-   
+start docker
+```java
+docker run -d -p 5432:5432 -v postgresdata:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres postgres
+docker ps
+docker logs [containerid]
+```
+docker compose - add new file in main project
+```java
+docker-compose.yml
+```
+```java
+version: "3"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data
+    privileged: true
+```
+start docker compose (kill the first docker)
+```java
+docker ps
+```
+copy the container id
+```java
+docker kill [container id]
+```
+run docker compose
+```java
+docker-compose up -d
+```
+commit - with docker compose
+```java
+docker-compose down
+```
