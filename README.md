@@ -9,6 +9,7 @@ spring web
 ```
 
 hello world
+
 controller/HelloController.java
 
 ```java
@@ -23,7 +24,7 @@ public class HelloController {
     
 }
 ```
-commit - hello world
+commit - with controller
 
 swagger
 
@@ -61,13 +62,30 @@ commit - with swagger
 start docker
 ```java
 docker run -d -p 5432:5432 -v postgresdata:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres postgres
+```
+```java
 docker ps
+```
+```java
 docker logs [containerid]
 ```
-docker compose - add new file in main project
+kill docker
+```java
+docker ps
+```
+copy the container id
+
+run
+```java
+docker kill [container id]
+```
+docker compose
+
+add new file in main project
 ```java
 docker-compose.yml
 ```
+copy to docker-compose.yml
 ```java
 version: "3"
 services:
@@ -81,19 +99,12 @@ services:
       - ./postgresdata:/var/lib/postgresql/data
     privileged: true
 ```
-start docker compose (kill the first docker)
-```java
-docker ps
-```
-copy the container id
-```java
-docker kill [container id]
-```
-run docker compose
+start docker compose
 ```java
 docker-compose up -d
 ```
-commit - with docker compose
+stop docker compose
 ```java
 docker-compose down
 ```
+commit - with docker compose
