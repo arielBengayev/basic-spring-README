@@ -1,13 +1,13 @@
-https://start.spring.io/ -> spring boot - 2.5.2
+https://start.spring.io/
 
 spring web 
 ```java
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-web</artifactId>
+</dependency>
 ```
-
+---
 hello world
 
 controller/HelloController.java
@@ -26,19 +26,20 @@ public class HelloController {
 ```
 commit - with controller
 
+---
 swagger
-
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.6.1</version>
-		</dependency><!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.6.1</version>
-		</dependency>
-
+```java
+<dependency>
+	<groupId>io.springfox</groupId>
+	<artifactId>springfox-swagger-ui</artifactId>
+	<version>2.6.1</version>
+</dependency><!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+<dependency>
+	<groupId>io.springfox</groupId>
+	<artifactId>springfox-swagger2</artifactId>
+	<version>2.6.1</version>
+</dependency>
+```
 config/SwaggerConfig.java
 
 ```java
@@ -59,6 +60,7 @@ http://localhost:8080/swagger-ui.html#
 
 commit - with swagger
 
+---
 start docker
 ```java
 docker run -d -p 5432:5432 -v postgresdata:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres postgres
@@ -69,16 +71,19 @@ docker ps
 ```java
 docker logs [containerid]
 ```
-kill docker
-```java
-docker ps
-```
-copy the container id
+---
 
-run
+kill docker
+
+copy the container id and run
 ```java
 docker kill [container id]
 ```
+```java
+docker ps
+```
+---
+
 docker compose
 
 add new file in main project
@@ -108,3 +113,46 @@ stop docker compose
 docker-compose down
 ```
 commit - with docker compose
+
+---
+spring data
+
+add to pom.xml
+```java
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+<dependency>
+	<groupId>org.postgresql</groupId>
+	<artifactId>postgresql</artifactId>
+	<scope>runtime</scope>
+</dependency>
+
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-validator</artifactId>
+	<version>6.1.5.Final</version>
+</dependency>
+```
+try to run the project, not run?
+
+copy to application.properties
+```java
+spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+#JPA properties
+spring.jpa.show-sql = true
+spring.jpa.hibernate.ddl-auto = update
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+```
+still not run? start docker
+```java
+docker-compose up -d
+```
+run, still no tables
+
