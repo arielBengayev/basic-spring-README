@@ -101,7 +101,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./postgresdata:/var/lib/postgresql/data
+      - ./postgresdata:/var/lib/postgresql/
     privileged: true
 ```
 start docker compose
