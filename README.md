@@ -156,3 +156,44 @@ docker-compose up -d
 ```
 run, still no tables
 
+---
+create a table
+
+add to com.first.project
+```java
+model/Student.java
+```
+add to Student.java
+```java
+@Entity
+@Table(name="student")
+public class Student implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
+
+    @NotEmpty
+    @Length(max = 60)
+    private String fullname;
+
+    private Date birthDate;
+
+    @Min(100)
+    @Max(800)
+    private Integer satScore;
+
+    @Min(30)
+    @Max(110)
+    private Double graduationScore;
+
+    @Length(max = 20)
+    private String phone;
+
+    @Length(max = 500)
+    private String profilePicture;
+
+}
+```
+commit - with data
