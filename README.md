@@ -1,18 +1,27 @@
-https://start.spring.io/
+## open project
+open a new spring boot project -> https://start.spring.io/
 
-spring web 
-```java
+open the project in intellij
+
+add to pom.xml
+```
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-web</artifactId>
 </dependency>
 ```
 ---
-hello world
-
-controller/HelloController.java
-
-```java
+## hello world
+add to com.first.project new package
+```
+controller
+```
+add to controller new java class
+```
+HelloController
+```
+copy to HelloController.java
+```
 @RestController
 @RequestMapping("/api/hello")
 public class HelloController {
@@ -27,8 +36,9 @@ public class HelloController {
 commit - with controller
 
 ---
-swagger
-```java
+## swagger
+add to pom.xml
+```
 <dependency>
 	<groupId>io.springfox</groupId>
 	<artifactId>springfox-swagger-ui</artifactId>
@@ -40,9 +50,16 @@ swagger
 	<version>2.6.1</version>
 </dependency>
 ```
-config/SwaggerConfig.java
-
-```java
+add to com.first.project new package
+```
+config
+```
+add to config new java class
+```
+SwaggerConfig
+```
+copy to SwaggerConfig.java
+```
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -56,42 +73,51 @@ public class SwaggerConfig {
     }
 }
 ```
-http://localhost:8080/swagger-ui.html#
+run the project
+
+go to -> http://localhost:8080/swagger-ui.html#
 
 commit - with swagger
 
 ---
-start docker
-```java
+## start docker
+open terminal in intellij
+
+run this command
+```
 docker run -d -p 5432:5432 -v postgresdata:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres postgres
 ```
-```java
+run to make sure the container created
+```
 docker ps
 ```
-```java
-docker logs [containerid]
+run to see logs
 ```
----
-
-kill docker
-
+docker logs [container id]
+```
+ kill docker
+ 
+run to copy the container id
+```
+docker ps
+```
 copy the container id and run
-```java
+```
 docker kill [container id]
 ```
+run again to make sure the docker killed
 ```java
 docker ps
 ```
 ---
 
-docker compose
-
+## docker compose
 add new file in main project
 ```java
 docker-compose.yml
 ```
 copy to docker-compose.yml
-```java
+```
 version: "3"
 services:
   db:
@@ -104,21 +130,20 @@ services:
       - ./postgresdata:/var/lib/postgresql/
     privileged: true
 ```
-start docker compose
-```java
+run in terminal to start docker compose
+```
 docker-compose up -d
 ```
-stop docker compose
-```java
+run stop docker compose
+```
 docker-compose down
 ```
 commit - with docker compose
 
 ---
-spring data
-
+## spring data
 add to pom.xml
-```java
+```
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -139,7 +164,7 @@ add to pom.xml
 try to run the project, not run?
 
 copy to application.properties
-```java
+```
 spring.datasource.url=jdbc:postgresql://localhost:5432/postgres
 spring.datasource.username=postgres
 spring.datasource.password=postgres
@@ -151,20 +176,28 @@ spring.jpa.hibernate.ddl-auto = update
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 ```
 still not run? start docker
-```java
+```
 docker-compose up -d
 ```
 run, still no tables
 
 ---
-create a table
+## create a table
 
-add to com.first.project
-```java
-model/Student.java
+make sure the container is up
 ```
-add to Student.java
-```java
+docker-compose up -d
+```
+add to com.first.project new package
+```
+model
+```
+add to model new java class
+```
+Student
+```
+copy to Student.java
+```
 @Entity
 @Table(name="student")
 public class Student implements Serializable {
@@ -175,20 +208,18 @@ public class Student implements Serializable {
     private Long id;
 
     @NotEmpty
-    @Length(max = 60)
-    private String fullname;
-
-    private Date birthDate;
+    @Length(max = 30)
+    private String fullName;
 
     @Min(100)
     @Max(800)
-    private Integer satScore;
+    private int psycoScore;
 
     @Min(30)
-    @Max(110)
+    @Max(100)
     private Double graduationScore;
 
-    @Length(max = 20)
+    @Length(max = 10)
     private String phone;
 
     @Length(max = 500)
@@ -196,4 +227,8 @@ public class Student implements Serializable {
 
 }
 ```
+run the project and make sure in compiler the table is created
+
+open tableplus, now yue can see your table
+
 commit - with data
