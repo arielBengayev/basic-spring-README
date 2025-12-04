@@ -198,8 +198,8 @@ Student
 ```
 copy to Student.java
 ```
-@Entity
-@Table(name="student")
+@Entity @Table(name="student")
+@Getter @Setter @AllArgsConstructor 
 public class Student implements Serializable {
     private static final long serialVersionUID = 1L;
 
