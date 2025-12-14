@@ -198,33 +198,45 @@ Student
 ```
 copy to Student.java
 ```
-@Entity @Table(name="student")
-@Getter @Setter @AllArgsConstructor 
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.io.Serializable;
+
+@Entity @Table(name="student2")
+@Getter @Setter
 public class Student implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
-    @Length(max = 30)
+    @NotBlank @Length(min = 5, max = 30)
     private String fullName;
 
-    @Min(100)
-    @Max(800)
-    private int psycoScore;
+    @Min(100) @Max(800)
+    private Integer psycoScore;
 
-    @Min(30)
-    @Max(100)
+    @Min(30) @Max(100)
     private Double graduationScore;
 
-    @Length(max = 10)
+    @NotBlank @Length(min = 10, max = 10)
     private String phone;
 
     @Length(max = 500)
     private String profilePicture;
 
+    public Student(){}
+
+    public Student(String fullName, Integer psycoScore, Double graduationScore, String phone, String profilePicture) {
+        this.fullName = fullName;
+        this.psycoScore = psycoScore;
+        this.graduationScore = graduationScore;
+        this.phone = phone;
+        this.profilePicture = profilePicture;
 }
 ```
 run the project and make sure in compiler the table is created
@@ -232,3 +244,110 @@ run the project and make sure in compiler the table is created
 open tableplus, now yue can see your table
 
 commit - with data
+
+---
+## CRUD
+
+add to com.first.project new package
+```
+repo
+```
+add to repo new java class
+```
+StudentRepository
+```
+copy to StudentRepository
+```
+import com.first.project.model.Student;
+import org.springframework.data.repository.CrudRepository;
+
+public interface StudentRepository extends CrudRepository<Student,Long> {
+
+}
+```
+add to com.first.project new package
+```
+service
+```
+add to service new java class
+```
+StudentService
+```
+copy to StudentService
+```
+import com.first.project.model.Student;
+import com.first.project.repo.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Optional;
+
+@Service
+public class StudentService {
+    @Autowired
+    StudentRepository repository;
+
+    public Iterable<Student> all() {
+        return repository.findAll();
+    }
+
+    public Optional<Student> findById(Long id) {
+        return repository.findById(id);
+    }
+
+    public Student save(Student student) {
+        return repository.save(student);
+    }
+
+    public void delete(Student student) {
+        repository.delete(student);
+    }
+}
+```
+add to model new java class
+```
+StudentIn
+```
+copy to StudentIn
+```
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+
+@Getter @Setter
+public class StudentIn implements Serializable {
+    @NotBlank @Length(min = 5, max = 30)
+    private String fullName;
+
+    @Min(100) @Max(800)
+    private Integer psycoScore;
+
+    @Min(30) @Max(100)
+    private Double graduationScore;
+
+    @NotBlank @Length(min = 10, max = 10)
+    private String phone;
+
+
+    public Student toStudent(StudentIn studentIn) {
+        return new Student(
+                studentIn.getFullName(),
+                studentIn.getPsycoScore(),
+                studentIn.getGraduationScore(),
+                studentIn.getPhone(),
+                null
+        );
+    }
+
+    public void updateStudent(Student student) {
+        student.setFullName(fullName);
+        student.setPsycoScore(psycoScore);
+        student.setGraduationScore(graduationScore);
+        student.setPhone(phone);
+    }
+}
+```
+commit - with CRUD
