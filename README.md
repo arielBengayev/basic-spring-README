@@ -198,13 +198,6 @@ Student
 ```
 copy to Student.java
 ```
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.io.Serializable;
-
 @Entity @Table(name="student2")
 @Getter @Setter
 public class Student implements Serializable {
@@ -275,12 +268,6 @@ StudentService
 ```
 copy to StudentService
 ```
-import com.first.project.model.Student;
-import com.first.project.repo.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.util.Optional;
-
 @Service
 public class StudentService {
     @Autowired
@@ -309,14 +296,6 @@ StudentIn
 ```
 copy to StudentIn
 ```
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
-
 @Getter @Setter
 public class StudentIn implements Serializable {
     @NotBlank @Length(min = 5, max = 30)
@@ -351,3 +330,53 @@ public class StudentIn implements Serializable {
 }
 ```
 commit - with CRUD
+
+---
+## REST
+
+add to controller new class
+```
+StudentController
+```
+copy to StudentController
+```
+@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+    @Autowired
+    StudentService studentService;
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllStudents() {
+        return new ResponseEntity<>(studentService.all(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getOneStudent(@PathVariable Long id) {
+        return new ResponseEntity<>(studentService.findById(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    public ResponseEntity<?> insertStudent(@RequestBody StudentIn studentIn) {
+        Student student = studentIn.toStudent(studentIn);
+        student = studentService.save(student);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody StudentIn student) {
+        Optional<Student> dbStudent = studentService.findById(id);
+        student.updateStudent(dbStudent.get());
+        Student updatedStudent = studentService.save(dbStudent.get());
+        return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
+        Optional<Student> dbStudent = studentService.findById(id);
+        studentService.delete(dbStudent.get());
+        return new ResponseEntity<>("DELETED", HttpStatus.OK);
+    }
+}
+```
+commit - with REST
