@@ -290,7 +290,11 @@ public class StudentService {
     }
 }
 ```
-add to model new java class
+add to com.first.project new package
+```
+dto
+```
+add to dto new java class
 ```
 StudentIn
 ```
