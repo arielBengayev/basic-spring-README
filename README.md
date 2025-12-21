@@ -346,24 +346,24 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping("/all")
     public ResponseEntity<?> getAllStudents() {
         return new ResponseEntity<>(studentService.all(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
     public ResponseEntity<?> getOneStudent(@PathVariable Long id) {
         return new ResponseEntity<>(studentService.findById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @PostMapping
     public ResponseEntity<?> insertStudent(@RequestBody StudentIn studentIn) {
         Student student = studentIn.toStudent(studentIn);
         student = studentService.save(student);
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody StudentIn student) {
         Optional<Student> dbStudent = studentService.findById(id);
         student.updateStudent(dbStudent.get());
@@ -371,7 +371,7 @@ public class StudentController {
         return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
         Optional<Student> dbStudent = studentService.findById(id);
         studentService.delete(dbStudent.get());
