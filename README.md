@@ -1,6 +1,8 @@
 ## open project
 open a new spring boot project -> https://start.spring.io/
 
+<img width="1730" height="765" alt="צילום מסך 2025-12-28 201756" src="https://github.com/user-attachments/assets/946f45a4-e5e4-4d98-822c-85ff72b35971" />
+
 open the project in intellij
 
 add to pom.xml
