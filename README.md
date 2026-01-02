@@ -386,3 +386,58 @@ public class StudentController {
 }
 ```
 commit - with REST
+
+---
+## Dockerize
+
+add to pom.xml in properties
+```
+<skipTests>true</skipTests>
+```
+change docker-compose file to
+```
+version: "3"
+services:
+  appserver:
+    container_name: server
+    image: project
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data
+    privileged: true
+```
+change in application.properties
+```
+spring.datasource.url=jdbc:postgresql://db:5432/postgres
+```
+add new file in main project
+```
+Dockerfile
+```
+copy to Dockerfile
+```
+FROM eclipse-temurin:11-jre
+COPY target/project*.jar /usr/src/project.jar
+COPY src/main/resources/application.properties /opt/conf/application.properties
+CMD ["java", "-jar", "/usr/src/project.jar", "--spring.config.location=file:/opt/conf/application.properties"]
+```
+go to maven -> Lifecycle and click on package
+
+open the terminal and run
+```
+docker build . -t project
+```
+stop the container and run
+```
+docker-compose up --force-recreate
+```
+go to -> http://localhost:8080/swagger-ui.html#
