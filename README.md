@@ -5,13 +5,32 @@ open a new spring boot project -> https://start.spring.io/
 
 open the project in intellij
 
-add to pom.xml
+if not add spring wed add to pom.xml
 ```
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-web</artifactId>
 </dependency>
 ```
+## connect the project to githab repository
+1. open githab account 
+
+2. click on + (create new) ->  choose new repository
+
+3. make sure the Add README is off!
+
+4. copy the https link and go to intellij
+
+5. open the project
+
+6. click on file -> VCS -> Enable Version Control Integration
+
+7. choose Git and click ok
+
+8. click on file -> git -> Manage Remotes
+
+9. click on +,  past the https from github to URL and click ok
+
 ---
 ## hello world
 add to com.first.project new package
