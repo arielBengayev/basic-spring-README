@@ -460,3 +460,37 @@ stop the container and run
 docker-compose up --force-recreate
 ```
 go to -> http://localhost:8080/swagger-ui.html#
+
+---
+## publish and deploy
+
+create account -> https://hub.docker.com
+
+open the terminal and run
+```
+docker login
+```
+enter your dockerhub username and password if needed
+
+after login run (change to your project name and dockerhub username)
+```
+docker tag (project name) (dockerhub username)/(project name):name-001
+```
+```
+docker push (dockerhub username)/(project name):name-001
+```
+in docker-compose file change the image of appserver to the new image
+```
+(dockerhub username)/(project name):name-001
+```
+open the command line
+
+run to open the project folder (change to your location)
+```
+cd C:\Users\username\Downloads\project\project
+```
+run
+```
+docker-compose up --force-recreate
+```
+commit - Dockerize
