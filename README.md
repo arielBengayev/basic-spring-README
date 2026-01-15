@@ -494,3 +494,11 @@ run
 docker-compose up --force-recreate
 ```
 commit - Dockerize
+
+now after every code changes do mavane package and run in terminal
+```
+docker build -t (dockerhub username)/(project name):name-version number
+```
+```
+docker push (dockerhub username)/(project name):name-version number
+```
