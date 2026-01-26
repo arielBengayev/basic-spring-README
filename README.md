@@ -1,5 +1,3 @@
-https://hub.docker.com/repository/docker/arielbengayev/demo/tags/arielb-001
-
 ## open project
 open a new spring boot project -> https://start.spring.io/
 
@@ -14,7 +12,9 @@ if not add spring wed add to pom.xml
 	<artifactId>spring-boot-starter-web</artifactId>
 </dependency>
 ```
+---
 ## connect the project to githab repository
+
 1. open githab account 
 
 2. click on + (create new) ->  choose new repository
@@ -32,6 +32,20 @@ if not add spring wed add to pom.xml
 8. click on file -> git -> Manage Remotes
 
 9. click on +,  past the https from github to URL and click ok
+
+---
+
+## git commands
+```
+git add .
+```
+```
+git commit -m "commit content"
+```
+check if you master or main in repo
+```
+git push origin master/main 
+```
 
 ---
 ## hello world
